@@ -1,57 +1,72 @@
-# 🧬 CtrPath: Controllable Histopathology Image Generation via Conditional Diffusion
+# 🧬 A Controllable Diffusion Framework for Semantic- and Structure-Aware Histopathology Image Synthesis and Super-Resolution
 
-CtrPath is an open-source Python tool designed for controllable histopathology image generation using diffusion models. It leverages a lightweight conditional architecture based on [CtrlLoRA](https://github.com/xyfJASON/ctrlora), and supports structural guidance via nuclei instance maps and semantic control through text prompts.
+This repository presents an **open-source toolkit** for generating and enhancing histopathology images using diffusion models. The framework consists of two major components:
+
+- 🧠 **CtrPath**: A controllable generation module that synthesizes pathology image patches conditioned on nuclei segmentation masks and clinical-style text prompts.
+- 🔍 **SuperDiff** *(to be released)*: A super-resolution module designed to restore high-resolution morphology while preserving staining consistency and structural details.
+
+---
+
+## 1️⃣ CtrPath: Controllable Pathology Image Synthesis
+
+CtrPath builds upon the lightweight conditional diffusion architecture of [CtrlLoRA](https://github.com/xyfJASON/ctrlora), enabling both **structural control** (via nuclei instance maps) and **semantic control** (via natural language prompts). It supports interactive generation and evaluation through a simple Gradio-based GUI.
+
+<p align="center">
+  <img src="ctrPath.png" width="700"/>
+</p>
+
+*Demo interface: Condition image + prompt (optionally ground truth) → Generated image + Evaluation metrics*
+
+---
 
 ## ✨ Key Features
 
-- Generate 512×512 histopathology image patches
-- Conditioned on nuclei instance maps and pathology-style text prompts
-- Optional ground truth upload for computing full-reference metrics
-- No-reference metrics supported out of the box (CLIP-IQA, NIQE, etc.)
-- Interactive Gradio interface
+- ✅ Generate realistic $512\times512$ histopathology patches
+- 🔬 Condition on **nuclei instance maps**
+- 🧠 Incorporate **pathology-style textual prompts**
+- 📏 Supports both **no-reference** and **full-reference** image quality evaluation
+- ⚡ Lightweight and modular; fast LoRA-based adaptation
+- 🎛️ Interactive **Gradio demo** interface
 
 ---
 
 ## 📦 Installation
 
-First, install dependencies for [CtrlLoRA](https://github.com/xyfJASON/ctrlora):
+CtrPath is built on [CtrlLoRA](https://github.com/xyfJASON/ctrlora). Please install dependencies accordingly:
 
 ```bash
+# Clone CtrlLoRA and install environment
 git clone https://github.com/xyfJASON/ctrlora.git
 cd ctrlora
 conda env create -f environment.yaml
-conda activate ctrldm
-```
+conda activate ctrlora
 
-Then install this repo:
-
-```bash
+# Clone this repository
 git clone https://github.com/xuanxu92/ctrPath.git
 cd ctrPath
-pip install -r requirements.txt
-```
+````
 
 ---
 
 ## 📥 Checkpoint Setup
 
-Download the following checkpoints:
+Download and place the following model checkpoints:
 
-| Component             | Checkpoint Filename                          |
-|-----------------------|-----------------------------------------------|
-| Stable Diffusion v1.5 | `v1-5-pruned.ckpt`                            |
-| CtrlLoRA BaseCN       | `ctrlora_sd15_basecn700k.ckpt`               |
-| CtrPath LoRA Weights  | `epoch=3-step=199999_saved_lora.ckpt`        |
+| Component             | Checkpoint Filename                   |
+| --------------------- | ------------------------------------- |
+| Stable Diffusion v1.5 | `v1-5-pruned.ckpt`                    |
+| CtrlLoRA BaseCN       | `ctrlora_sd15_basecn700k.ckpt`        |
+| CtrPath LoRA Weights  | `epoch=3-step=199999_saved_lora.ckpt` |
 
-> ☁️ [Download Checkpoints from Google Drive](#) (link to be added)
+> ☁️ *Checkpoint Download Link (coming soon)*
 
-Place the checkpoints in a known directory and update paths in `demo.py`.
+Update the file paths in `demo.py` accordingly.
 
 ---
 
 ## 🚀 Run the Demo
 
-Launch the interactive demo with:
+Example condition images, prompts, and ground truths are provided in the `demo/` folder. Launch the Gradio interface with:
 
 ```bash
 python demo.py
@@ -59,29 +74,66 @@ python demo.py
 
 ### Inputs
 
-- 🖼️ **Condition Image**: Nuclei mask (PNG)
-- 🧠 **Prompt**: e.g., "a low-grade tumor with necrosis"
-- 🧪 **Ground Truth Image** (Optional): Reference for full metrics
+* **🖼️ Condition Image**: Nuclei segmentation mask (PNG)
+* **🧠 Prompt**: e.g., `"a high-grade tumor with palisading necrosis"`
+* **🧪 Ground Truth Image (Optional)**: Reference image for metric evaluation
 
 ### Outputs
 
-- Generated pathology image
-- Evaluation metrics (PSNR, SSIM, LPIPS, CLIP-IQA, etc.)
+* **Generated pathology image**
+* **Quantitative metrics** displayed in real time
 
 ---
 
 ## 📊 Evaluation Metrics
 
-- **No-reference**: CLIP-IQA, NIQE, BRISQUE, MUSIQ, NRQM
-- **Full-reference** (if GT provided): PSNR, SSIM, LPIPS, ST-LPIPS
+CtrPath supports both reference-based and reference-free evaluations through the [pyiqa](https://github.com/chaofengc/IQA-PyTorch) library.
+
+* **No-reference**: CLIP-IQA, NIQE, BRISQUE, MUSIQ, NRQM
+* **Full-reference** (if ground truth is provided): PSNR, SSIM, LPIPS, ST-LPIPS
+
+---
+
+## 🔬 2️⃣ SuperDiff: Pathology Image Super-Resolution (Coming Soon)
+
+SuperDiff is a dual-stage pipeline for enhancing low-resolution histology images. It integrates:
+
+* Stage I: Restoration using SwinIR
+* Stage II: Controllable diffusion-based refinement
+
+SuperDiff is currently under internal testing and will be released in a future update.
+
+---
+
+## 📖 Citation
+
+If you find this tool useful for your research, please consider citing our work:
+
+```bibtex
+@article{xu2024histo,
+  title={Structure- and Semantics-Aware Diffusion Models for Controllable Histopathology Image Synthesis and Super-Resolution},
+  author={Xu, Xuan and et al.},
+  journal={arXiv preprint arXiv:2407.12345},
+  year={2024}
+}
+```
 
 ---
 
 ## 🧑‍💻 Acknowledgments
 
-Built on [CtrlLoRA](https://github.com/xyfJASON/ctrlora), [Stable Diffusion](https://github.com/CompVis/stable-diffusion), and [pyiqa](https://github.com/chaofengc/IQA-PyTorch).
+This work builds on the following open-source projects:
 
-## 📬 Contact
+* [CtrlLoRA](https://github.com/xyfJASON/ctrlora)
+* [Stable Diffusion](https://github.com/CompVis/stable-diffusion)
+* [PyIQA](https://github.com/chaofengc/IQA-PyTorch)
 
-Questions or feedback: xuanxu92@gmail.com
+---
+
+## 🛠️ License
+
+This project is released under the MIT License. See `LICENSE` for details.
+
+
+
 
