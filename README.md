@@ -12,7 +12,7 @@ This repository presents an **open-source toolkit** for generating and enhancing
 CtrPath builds upon the lightweight conditional diffusion architecture of [CtrlLoRA](https://github.com/xyfJASON/ctrlora), enabling both **structural control** (via nuclei instance maps) and **semantic control** (via natural language prompts). It supports interactive generation and evaluation through a simple Gradio-based GUI.
 
 <p align="center">
-  <img src="ctrPath.png" width="700"/>
+  <img src="ctrlora.png" width="700"/>
 </p>
 
 *Demo interface: Condition image + prompt (optionally ground truth) → Generated image + Evaluation metrics*
