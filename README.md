@@ -124,9 +124,13 @@ If you find this tool useful for your research, please consider citing our work:
 
 This work builds on the following open-source projects:
 
-* [CtrlLoRA](https://github.com/xyfJASON/ctrlora)
-* [Stable Diffusion](https://github.com/CompVis/stable-diffusion)
-* [PyIQA](https://github.com/chaofengc/IQA-PyTorch)
+- [CtrlLoRA](https://github.com/xyfJASON/ctrlora): Lightweight conditional diffusion framework with LoRA modules.
+- [Stable Diffusion](https://github.com/CompVis/stable-diffusion): Foundation model for image generation.
+- [ControlNet](https://github.com/lllyasviel/ControlNet): Conditional control mechanisms for Stable Diffusion.
+- [PyIQA](https://github.com/chaofengc/IQA-PyTorch): A comprehensive library for image quality assessment (IQA) metrics.
+- [PathGen-1.6M](https://github.com/PathFoundation/PathGen-1.6M): A large-scale dataset of histopathology images with paired prompts and nuclei annotations used to fine-tune CtrPath.
+
+We are grateful to the developers and maintainers of these projects for enabling this work.
 
 ---
 
