@@ -122,7 +122,7 @@ if __name__ == "__main__":
     trainer = pl.Trainer(
         strategy='ddp', accelerator='gpu', devices=-1, accumulate_grad_batches=args.gradacc,
         max_steps=args.max_steps, precision=args.precision, callbacks=[logger_img, logger_checkpoint],
-        default_root_dir=os.path.join('runs', args.name),
+        default_root_dir=os.path.join('/data07/shared/xxu/cvpr/may07', args.name),
     )
 
     # Train!

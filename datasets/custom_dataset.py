@@ -31,8 +31,8 @@ class CustomDataset(Dataset):
         self.drop_rate = drop_rate
 
         root = os.path.expanduser(root)
-        if not os.path.isfile(os.path.join(root, 'prompt.json')):
-            raise FileNotFoundError(f"{os.path.join(root, 'prompt.json')} not found.")
+        if not os.path.isfile(os.path.join(root, 'prompt.jsonl')):
+            raise FileNotFoundError(f"{os.path.join(root, 'prompt.jsonl')} not found.")
         if not os.path.isdir(os.path.join(root, 'source')):
             raise FileNotFoundError(f"{os.path.join(root, 'source')} not found.")
         if not os.path.isdir(os.path.join(root, 'target')):
@@ -41,7 +41,7 @@ class CustomDataset(Dataset):
         self.data = []
         source_files = set(os.listdir(os.path.join(root, 'source')))
         target_files = set(os.listdir(os.path.join(root, 'target')))
-        with open(os.path.join(root, 'prompt.json'), 'rt') as f:
+        with open(os.path.join(root, 'prompt.jsonl'), 'rt') as f:
             for line in f:
                 data = json.loads(line)
                 if data['source'].removeprefix('source/') not in source_files:
@@ -64,12 +64,32 @@ class CustomDataset(Dataset):
         if np.random.rand() < self.drop_rate:
             prompt = ''
 
-        source = cv2.imread(os.path.join(self.root, source_filename))
-        target = cv2.imread(os.path.join(self.root, target_filename))
+        # source = cv2.imread(os.path.join(self.root, source_filename))
+        # target = cv2.imread(os.path.join(self.root, target_filename))
 
-        # Do not forget that OpenCV read images in BGR order.
+        # # Do not forget that OpenCV read images in BGR order.
+        # source = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
+        # target = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
+        source = cv2.imread(os.path.join(self.root, source_filename), cv2.IMREAD_UNCHANGED)  # BGR or BGRA
+        target = cv2.imread(os.path.join(self.root, target_filename), cv2.IMREAD_UNCHANGED)  # BGR or BGRA
+
+        # 如果 source 是 RGBA（4通道），去掉 alpha 通道
+        if source.ndim == 3 and source.shape[2] == 4:
+            source = source[:, :, :3]
+        # 将 BGR 转为 RGB
         source = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
+
+        # 如果 target 是 RGBA（4通道），去掉 alpha 通道
+        if target.ndim == 3 and target.shape[2] == 4:
+            target = target[:, :, :3]
+        # 将 BGR 转为 RGB
         target = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
+
+        # 调整大小
+        source = cv2.resize(source, (512, 512), interpolation=cv2.INTER_LINEAR)
+        target = cv2.resize(target, (512, 512), interpolation=cv2.INTER_LINEAR)
+
+        # print("custom dataset after source:{} target:{}".format(source.shape,target.shape))
 
         # Normalize source images to [0, 1].
         source = source.astype(np.float32) / 255.0

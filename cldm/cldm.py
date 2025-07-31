@@ -38,6 +38,9 @@ class ControlledUnetModel(UNetModel):
             if only_mid_control or control is None:
                 h = torch.cat([h, hs.pop()], dim=1)
             else:
+                # print("h shape:", h.shape)
+                # print("hs top shape:", hs[-1].shape)
+                # print("control top shape:", control[-1].shape)
                 h = torch.cat([h, hs.pop() + control.pop()], dim=1)
             h = module(h, emb, context)
 

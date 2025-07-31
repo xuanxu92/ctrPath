@@ -21,10 +21,10 @@ from cldm.model import create_model, load_state_dict
 from cldm.ddim_hacked import DDIMSampler
 
 
-CKPT_DIR = './ckpts'
+CKPT_DIR = '/data07/shared/xxu/cvpr/may07'
 CKPT_SD15_DIR = os.path.join(CKPT_DIR, 'sd15')
-CKPT_BASECN_DIR = os.path.join(CKPT_DIR, 'ctrlora-basecn')
-CKPT_LORAS_DIR = os.path.join(CKPT_DIR, 'ctrlora-loras')
+CKPT_BASECN_DIR = os.path.join(CKPT_DIR, 'ctrlora','ctrlora-basecn')
+CKPT_LORAS_DIR = os.path.join(CKPT_DIR, 'ctrlora','ctrlora-loras')
 CONFIG_DIR = './configs'
 
 model: Any = None
@@ -566,7 +566,7 @@ def main():
             tab1()
         with gr.Tab(label='Two conditions'):
             tab2()
-    blocks.launch(server_name='0.0.0.0')
+    blocks.launch(server_name='0.0.0.0', share=True)
 
 
 if __name__ == '__main__':
