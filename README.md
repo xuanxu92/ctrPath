@@ -69,7 +69,7 @@ Update the file paths in `demo.py` accordingly.
 Example condition images, prompts, and ground truths are provided in the `demo/` folder. Launch the Gradio interface with:
 
 ```bash
-python demo.py
+python demo_gradio.py
 ```
 
 ### Inputs
