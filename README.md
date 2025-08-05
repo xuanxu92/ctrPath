@@ -105,20 +105,6 @@ SuperDiff is currently under internal testing and will be released in a future u
 
 ---
 
-## 📖 Citation
-
-If you find this tool useful for your research, please consider citing our work:
-
-```bibtex
-@article{xu2024histo,
-  title={Structure- and Semantics-Aware Diffusion Models for Controllable Histopathology Image Synthesis and Super-Resolution},
-  author={Xu, Xuan and et al.},
-  journal={arXiv preprint arXiv:2407.12345},
-  year={2024}
-}
-```
-
----
 
 ## 🧑‍💻 Acknowledgments
 
