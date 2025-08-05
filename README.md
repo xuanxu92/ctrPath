@@ -60,7 +60,7 @@ Download and place the following model checkpoints:
 
 > ☁️ [Download Checkpoints from Google Drive](https://drive.google.com/file/d/1W-_2likkW0nsmnZRieRzx0y_1PTvzM1I/view?usp=sharing)
 
-Update the file paths in `demo.py` accordingly.
+Update the file paths in `demo_gradio.py` accordingly.
 
 ---
 
