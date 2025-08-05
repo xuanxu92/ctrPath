@@ -58,7 +58,7 @@ Download and place the following model checkpoints:
 | CtrlLoRA BaseCN       | `ctrlora_sd15_basecn700k.ckpt`        |
 | CtrPath LoRA Weights  | `epoch=3-step=199999_saved_lora.ckpt` |
 
-> ☁️ *Checkpoint Download Link (coming soon)*
+> ☁️ [Download Checkpoints from Google Drive](https://drive.google.com/file/d/1W-_2likkW0nsmnZRieRzx0y_1PTvzM1I/view?usp=sharing)
 
 Update the file paths in `demo.py` accordingly.
 
